@@ -171,7 +171,7 @@ async def handle_time(
     match = re.search(r"(\d*)[:：](\d*)", time)
     if match and match[1] and match[2]:
         calendar_subscribe(str(event.group_id), match[1], match[2])
-        if match[1] < 8:
+        if int(match[1]) < 8:
             await moyu_matcher.send("在上午 8 时前获取的摸鱼日历可能未及时更新。")
         await moyu_matcher.finish(
             f"摸鱼日历的每日推送时间已设置为：{match[1]}:{match[2]}"
