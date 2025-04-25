@@ -1,4 +1,5 @@
 import re
+import ssl
 from pathlib import Path
 
 import httpx
@@ -7,20 +8,37 @@ from nonebot.adapters import Message
 from nonebot.adapters.onebot.v11 import GroupMessageEvent, MessageSegment
 from nonebot.matcher import Matcher
 from nonebot.params import Arg, CommandArg
+from nonebot.plugin import PluginMetadata
 from nonebot.typing import T_State
 
 try:
-    import ujson as json
+    import ujson as json  # type: ignore
 except ModuleNotFoundError:
     import json
 
 require("nonebot_plugin_apscheduler")
+
+__plugin_meta__ = PluginMetadata(
+    name="摸鱼日历",
+    description="摸鱼一时爽, 一直摸鱼一直爽",
+    usage="""摸鱼日历
+    摸鱼日历状态
+    摸鱼日历设置 小时:分钟
+    摸鱼日历禁用
+    """,
+    type="application",
+)
+
 
 from nonebot_plugin_apscheduler import scheduler
 
 subscribe = Path(__file__).parent / "subscribe.json"
 
 subscribe_list = json.loads(subscribe.read_text("utf-8")) if subscribe.is_file() else {}
+
+# 避免 Linux 下 HTTPS 请求失败
+_ssl_context = ssl.create_default_context()
+_ssl_context.set_ciphers("DEFAULT")
 
 
 def save_subscribe():
@@ -31,7 +49,9 @@ driver = get_driver()
 
 
 async def get_calendar() -> bytes:
-    async with httpx.AsyncClient(http2=True, follow_redirects=True) as client:
+    async with httpx.AsyncClient(
+        http2=True, follow_redirects=True, verify=_ssl_context
+    ) as client:
         # 以下方法是一个通用方法，但是现在已经失效，保留代码，以备不时之需
         # response = await client.get(
         #     "https://api.j4u.ink/v1/store/other/proxy/remote/moyu.json"
@@ -151,6 +171,8 @@ async def handle_time(
     match = re.search(r"(\d*)[:：](\d*)", time)
     if match and match[1] and match[2]:
         calendar_subscribe(str(event.group_id), match[1], match[2])
+        if match[1] < 8:
+            await moyu_matcher.send("在上午 8 时前获取的摸鱼日历可能未及时更新。")
         await moyu_matcher.finish(
             f"摸鱼日历的每日推送时间已设置为：{match[1]}:{match[2]}"
         )

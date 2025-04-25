@@ -10,7 +10,6 @@
 
 _✨ 摸鱼一时爽, 一直摸鱼一直爽 ✨_
 
-
 <a href="./LICENSE">
     <img src="https://img.shields.io/github/license/A-kirami/nonebot-plugin-moyu.svg" alt="license">
 </a>
@@ -39,21 +38,25 @@ _✨ 摸鱼一时爽, 一直摸鱼一直爽 ✨_
 <summary>pip</summary>
 
     pip install nonebot-plugin-moyu
+
 </details>
 <details>
 <summary>pdm</summary>
 
     pdm add nonebot-plugin-moyu
+
 </details>
 <details>
 <summary>poetry</summary>
 
     poetry add nonebot-plugin-moyu
+
 </details>
 <details>
 <summary>conda</summary>
 
     conda install nonebot-plugin-moyu
+
 </details>
 
 打开 nonebot2 项目的 `bot.py` 文件, 在其中写入
@@ -63,11 +66,13 @@ _✨ 摸鱼一时爽, 一直摸鱼一直爽 ✨_
 </details>
 
 ## 🎉 使用
+
 ### 指令表
-| 指令  | 说明 |
-|:-----:|:----:|
-| 摸鱼/摸鱼日历 | 查看今天的摸鱼日历 |
-| 摸鱼/摸鱼日历+设置 | 以连续对话的形式设置摸鱼日历的推送时间 |
-| 摸鱼/摸鱼日历+设置 小时:分钟 | 设置摸鱼日历的推送时间 |
-| 摸鱼/摸鱼日历+状态 | 查看本群的摸鱼日历状态 |
-| 摸鱼/摸鱼日历+禁用 | 禁用本群的摸鱼日历推送 |
+
+|             指令             |                  说明                  |
+| :--------------------------: | :------------------------------------: |
+|        摸鱼/摸鱼日历         |           查看今天的摸鱼日历           |
+|      摸鱼/摸鱼日历+设置      | 以连续对话的形式设置摸鱼日历的推送时间 |
+| 摸鱼/摸鱼日历+设置 小时:分钟 |         设置摸鱼日历的推送时间         |
+|      摸鱼/摸鱼日历+状态      |         查看本群的摸鱼日历状态         |
+|      摸鱼/摸鱼日历+禁用      |         禁用本群的摸鱼日历推送         |
